@@ -1,0 +1,162 @@
+body {
+  background-color: azure;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #522852;
+}
+
+main {
+  padding: 2%;
+}
+
+/**** HEADER ****/
+.main-header {
+  width: 100%;
+  height: 50px;
+  background-color: #522852;
+  top: 0;
+  left: 0;
+  padding: 0 3%;
+}
+
+.main-header_nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.main-header_item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.main-header_item {
+  margin: 0 1rem; /* dont ask why i used rem, it worked better */
+  padding: 0;
+}
+
+.main-header_item a:hover,
+.main-header_item a:active,
+.main-header_item a:active {
+  color: salmon;
+}
+
+.main-header_item a {
+  text-decoration: none;
+  color: azure;
+}
+
+/**** FORM ****/
+.product-form {
+  width: 60%;
+  max-width: 90%;
+  margin: auto;
+}
+
+.form-control {
+  margin: 5px 0px;
+}
+
+.form-control label,
+.form-control input {
+  display: block;
+  width: 100%;
+}
+
+.form-control input {
+  border: 1px solid #522852;
+  border-radius: 8px;
+  height: 25px;
+  font: inherit;
+}
+
+button {
+  font: inherit;
+  border: 1px solid #522852;
+  background: #522852;
+  color: whitesmoke;
+  border-radius: 8px;
+  /* margin-top: 5px; */
+  cursor: pointer;
+  padding: 3px 5px;
+}
+
+button:hover,
+button:active {
+  background-color: #803b80;
+}
+
+/**** SHOP PAGE  ****/
+.cardTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+.card {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #522852;
+  color: azure;
+}
+
+.card__header,
+.card__content {
+  padding: 1rem;
+}
+
+.card__header h1,
+.card__content h1,
+.card__content h2,
+.card__content p {
+  margin: 0;
+}
+
+.card__image {
+  width: 100%;
+}
+
+.card__image img {
+  width: 100%;
+}
+
+.card__actions {
+  padding: 1rem;
+  text-align: center;
+}
+
+.card__actions button,
+.card__actions a {
+  margin: 0 0.25rem;
+}
+
+.btn {
+  font: inherit;
+  border: 1px solid #00695c;
+  color: #00695c;
+  background: white;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-bottom: 7px;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: salmon;
+  color: white;
+}
