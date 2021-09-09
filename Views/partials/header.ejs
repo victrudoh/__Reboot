@@ -5,14 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css">
-    <title>Add Product</title>
+    <title>Kotlyn</title>
   </head>
   <body>
     <header class="main-header">
       <nav class="main-header_nav">
         <ul class="main-header_item-list">
-          <li class="main-header_item"><a class="active" href="/user">Shop</a></li>
-          <li class="main-header_item"><a href="/admin/add_product">Add Product</a></li>
+          <li class="main-header_item"><a class="<%= path === 'index' ? 'active' : '' %>" href="/">Shop</a></li>
+          <li class="main-header_item"><a class="<%= path === 'product_list' ? 'active' : '' %>" href="/products">Products</a></li>
+          <li class="main-header_item"><a class="<%= path === 'cart' ? 'active' : '' %>" href="/cart">Cart</a></li>
+          <li class="main-header_item"><a class="<%= path === 'orders' ? 'active' : '' %>" href="/orders">Orders</a></li>
+          <li class="main-header_item"><a class="<%= path === 'add_product' ? 'active' : '' %>" href="/admin/add_product">Add Product</a></li>
+          <li class="main-header_item"><a class="<%= path === 'adminProduct_list' ? 'active' : '' %>" href="/admin/products">Admin Products</a></li>
         </ul>
       </nav>
     </header>

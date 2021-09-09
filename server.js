@@ -14,15 +14,15 @@ app.set("view engine", "ejs"); // template engine
 app.set("views", path.join(__dirname, "views")); // setting views directory
 app.use(express.static(path.join(__dirname, "public"))); // static files directory
 
+const errorController = require("./Controller/error.controller");
+
 const adminRouter = require("./routes/admin.routes");
-const shopRouter = require("./routes/shop.routes");
+const productRouter = require("./Routes/product.routes");
 
 app.use("/admin", adminRouter);
-app.use("/user", shopRouter);
+app.use("/", productRouter);
+app.use(errorController.errorController);
 
-app.use((req, res, next) => {
-  res.status(404).render("404");
-});
 
 app.listen(port, () => {
   console.log(`Server running on ${port}`);

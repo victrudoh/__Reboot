@@ -41,7 +41,7 @@ main {
 
 .main-header_item a:hover,
 .main-header_item a:active,
-.main-header_item a:active {
+.main-header_item a.active {
   color: salmon;
 }
 
@@ -62,16 +62,25 @@ main {
 }
 
 .form-control label,
-.form-control input {
+.form-control input,
+.form-control textarea {
   display: block;
   width: 100%;
+  margin-bottom: 0.25rem;
 }
 
-.form-control input {
+.form-control input
+.form-control textarea {
   border: 1px solid #522852;
   border-radius: 8px;
   height: 25px;
   font: inherit;
+}
+
+.form-control input:focus
+.form-control textarea:focus {
+  outline: #522852;
+  border-radius: inherit;
 }
 
 button {
@@ -113,6 +122,8 @@ button:active {
   align-items: center;
   background-color: #522852;
   color: azure;
+  margin-top: 35px;
+  text-align: center;
 }
 
 .card__header,
@@ -142,7 +153,8 @@ button:active {
 
 .card__actions button,
 .card__actions a {
-  margin: 0 0.25rem;
+  /* margin: 0 0.25rem; */
+  margin-bottom: 15px;
 }
 
 .btn {
@@ -152,7 +164,10 @@ button:active {
   background: white;
   border-radius: 3px;
   cursor: pointer;
-  margin-bottom: 7px;
+  margin-bottom: 15px;
+  padding: 2px 8px;
+  margin-right: 3px;
+  text-decoration: none;
 }
 
 .btn:hover,
