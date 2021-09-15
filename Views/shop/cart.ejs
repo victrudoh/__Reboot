@@ -1,7 +1,37 @@
 <%- include('../partials/header.ejs') %>
 
 <div class="container">
-    <h1>Cart</h1>
+  <main>
+    <h1 class="center">Cart</h1>
+    <% if (products.length > 0 ) { %>
+    <ul class="cart__item-list">
+      <% products.forEach(p => { %>
+      <li class="cart__item">
+        <h1><%= p.productId.title %></h1>
+        <h2>Quantity: <%= p.quantity %></h2>
+        <form action="/cart_delete_item" method="POST">
+          <input type="hidden" value="<%= p.productId._id %>" name="id" />
+          <button type="submit" class="btn danger">Delete</button>
+        </form>
+      </li>
+      <% }) %>
+    </ul>
+    <% } else { %>
+    <h1>Cart is empty, try adding some products</h1>
+    <br />
+    <a href="/products" class="btn">Go to shop</a>
+    <% } %>
+
+    <h1 class="center">Total Price:</h1>
+    <h2><%= products.totalPrice %></h2>
+
+    <hr />
+    <div class="centered">
+      <form action="/create_order" method="POST">
+        <button type="submit" class="btn">Order Now!</button>
+      </form>
+    </div>
+  </main>
 </div>
 
 <%- include('../partials/footer.ejs') %>

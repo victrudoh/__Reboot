@@ -1,7 +1,22 @@
 <%- include('../partials/header.ejs') %>
 
 <div class="container">
- <h1>Product Details</h1>   
+ <main class="centered">
+    <h1>Product Details</h1><br>
+    <h2><%= product.title %></h2>
+    <hr>
+    <div>
+        <img src="<%= product.media%>" alt="no media">
+    </div>
+    <h3><%= product.price %></h3>
+    <p><%= product.descriprion %></p>
+    <br>
+    <form action="/cart" method="POST">
+        <button type="submit" class="btn">Add to cart</button>
+        <input type="hidden" name="productId" value="<%= product.id %>">
+    </form>
+    <a href="/products" class="btn">Back</a>
+ </main>
 </div>
 
 

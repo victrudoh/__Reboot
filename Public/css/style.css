@@ -11,6 +11,10 @@ main {
   padding: 2%;
 }
 
+.centered {
+  text-align: center;
+}
+
 /**** HEADER ****/
 .main-header {
   width: 100%;
@@ -162,9 +166,10 @@ button:active {
   border: 1px solid #00695c;
   color: #00695c;
   background: white;
-  border-radius: 3px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 2px 8px;
   margin-right: 3px;
   text-decoration: none;
@@ -173,5 +178,16 @@ button:active {
 .btn:hover,
 .btn:active {
   background-color: salmon;
+  color: white;
+}
+
+.btn.danger {
+  color: red;
+  border-color: red;
+}
+
+.btn.danger:hover,
+.btn.danger:active {
+  background: red;
   color: white;
 }

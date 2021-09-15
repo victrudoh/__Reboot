@@ -1,6 +1,8 @@
+const path = require("path");
+
 const express = require("express");
 const morgan = require("morgan");
-const path = require("path");
+const mongoose = require("mongoose");
 
 const port = process.env.PORT || 3033;
 
@@ -15,15 +17,46 @@ app.set("views", path.join(__dirname, "views")); // setting views directory
 app.use(express.static(path.join(__dirname, "public"))); // static files directory
 
 const errorController = require("./Controller/error.controller");
+const User = require("./Models/user.model");
 
 const adminRouter = require("./routes/admin.routes");
-const productRouter = require("./Routes/product.routes");
+const shopRouter = require("./Routes/shop.routes");
+
+app.use((req, res, next) => {
+  User.findById("61405c3a1a15e0c34615db80")
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => console.log(err, "User error in server.js"));
+});
 
 app.use("/admin", adminRouter);
-app.use("/", productRouter);
-app.use(errorController.errorController);
+app.use("/", shopRouter);
+app.use(errorController.get404);
 
+mongoose
+  .connect("mongodb://localhost:27017/shop", {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => {
+    User.findOne().then((user) => {
+      if (!user) {
+        const user = new User({
+          username: "Edikan",
+          email: "Echma@gmail.com",
+          cart: {
+            items: [],
+          },
+        });
+        user.save();
+      }
+    });
 
-app.listen(port, () => {
-  console.log(`Server running on ${port}`);
-});
+    console.log("database connected succesfuly");
+    app.listen(port, () => {
+      console.log(`Server running on ${port}`);
+    });
+  })
+  .catch((err) => console.log("connection error: ", err.message));

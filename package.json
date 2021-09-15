@@ -23,8 +23,11 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.3",
+    "mongodb": "^4.1.1",
+    "mongoose": "^6.0.5",
     "nodemon": "^2.0.12",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "save": "^2.4.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0"
