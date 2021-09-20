@@ -20,6 +20,9 @@ const orderSchema = new Schema({
     required: true,
     ref: "User",
   },
+},
+{
+  timestamps: true
 });
 
 orderSchema.methods.getOrders = function () {

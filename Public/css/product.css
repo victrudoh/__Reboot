@@ -1,0 +1,89 @@
+
+/**** SHOP PAGE  ****/
+.cardTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+.card {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #522852;
+  color: azure;
+  margin-top: 35px;
+  text-align: center;
+}
+
+.card__header,
+.card__content {
+  padding: 1rem;
+}
+
+.card__header h1,
+.card__content h1,
+.card__content h2,
+.card__content p {
+  margin: 0;
+}
+
+.card__image {
+  width: 100%;
+}
+
+.card__image img {
+  width: 100%;
+}
+
+.card__actions {
+  padding: 1rem;
+  text-align: center;
+}
+
+.card__actions button,
+.card__actions a {
+  /* margin: 0 0.25rem; */
+  margin-bottom: 15px;
+}
+
+.btn {
+  font: inherit;
+  border: 1px solid #522852;
+  color: #522852;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 2px 8px;
+  margin-right: 3px;
+  text-decoration: none;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: salmon;
+  color: white;
+}
+
+.btn.danger {
+  color: red;
+  border-color: red;
+}
+
+.btn.danger:hover,
+.btn.danger:active {
+  background: red;
+  color: white;
+}

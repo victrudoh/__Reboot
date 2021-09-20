@@ -7,7 +7,8 @@
   margin: 0;
   padding: 0;
   margin: auto;
-  width: 40rem;
+  /* width: 40rem; */
+  width: 60%;
   max-width: 90%;
   /* text-align: center; */
 }

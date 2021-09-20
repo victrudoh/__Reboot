@@ -1,5 +1,6 @@
 const Product = require("../Models/product.model");
 const Order = require("../Models/order.model");
+const moment = require('moment');
 
 module.exports = {
   getProductController: (req, res, next) => {
@@ -54,6 +55,7 @@ module.exports = {
           path: "cart",
           pageTitle: "Your Cart",
           products: products,
+          moment: moment
         });
       })
       .catch((err) => console.log(err, "getcartController"));
@@ -64,6 +66,8 @@ module.exports = {
     console.log(prodId);
     Product.findById(prodId)
       .then((product) => {
+        isCartEmpty = false;
+        console.log("🚀 ~ file: shop.controller.js ~ line 68 ~ .then ~ isCartEmpty", isCartEmpty)
         return req.user.addToCart(product);
       })
       .then((result) => {
@@ -90,7 +94,7 @@ module.exports = {
       .populate("cart.items.productId")
       .then((user) => {
         const products = user.cart.items.map((i) => {
-          return { quantity: i.quantity, product: i.productId };
+          return { quantity: i.quantity, product: {...i.productId._doc }};
         });
         const order = new Order({
           user: {
@@ -102,14 +106,17 @@ module.exports = {
         return order.save();
       })
       .then((result) => {
+        isCartEmpty = true;
+        return req.user.clearCart();
+      })
+      .then(() => {
         res.redirect("/orders");
       })
       .catch((err) => console.log(err, 'postOrderController'));
   },
 
   getOrdersController: (req, res, next) => {
-    req.user
-      .getOrders()
+    Order.find({ "user.userId": req.user._id })
       .then((orders) => {
         res.render("shop/orders", {
           path: "orders",

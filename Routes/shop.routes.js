@@ -13,7 +13,7 @@ router.get("/cart", shopController.getcartController);
 
 router.post("/cart", shopController.postCartController);
 
-// router.get("/orders", shopController.getOrdersController);
+router.get("/orders", shopController.getOrdersController);
 
 router.post('/create_order', shopController.postOrderController);
 

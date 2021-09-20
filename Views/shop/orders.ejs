@@ -1,7 +1,38 @@
 <%- include('../partials/header.ejs') %>
 
-<div class="container">
-    <h1>Orders</h1>
-</div>
+<main>
+  <% if (orders.length <= 0) { %>
+  <h1>Nothing there!</h1>
+  <% } else { %>
+  <ul class="orders">
+    <% totalPrice = 0 %>
+    <% orders.forEach(order => { %>
+    <li class="orders__item">
+      <div class="spaceBetween">
+        <h1>Order - # <%= order._id %></h1>
+        <%= order.createdAt %>
+      </div>
+      <ul class="orders__products">
+        <% order.products.forEach(p => { %>
+        <li class="orders__products-item">
+          <%= p.product.title %> (<%= p.quantity %>)
+          <h3>₦<%= p.product.price %></h3>
+          <% itemTotalPrice = p.product.price * p.quantity %>
+          <% totalPrice = totalPrice + itemTotalPrice %>
+        </li>
+        <% }); %>
+        <h3>Total Price: ₦<%= totalPrice %></h3>
+      </ul>
+    </li>
+    <% }); %>
+  </ul>
+  <% } %>
+
+  <!-- <div class="centered">
+        <form action="/create_order" method="POST">
+          <button type="submit" class="btn">Order Now!</button>
+        </form>
+      </div> -->
+</main>
 
 <%- include('../partials/footer.ejs') %>

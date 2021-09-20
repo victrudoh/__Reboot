@@ -4,11 +4,25 @@
   <main>
     <h1 class="center">Cart</h1>
     <% if (products.length > 0 ) { %>
+
+      <% totalPrice = 0 %>
+
     <ul class="cart__item-list">
       <% products.forEach(p => { %>
+
+        <% title = p.productId.title %>
+        <% price = p.productId.price %>
+        <% quantity = p.quantity %>
+
       <li class="cart__item">
-        <h1><%= p.productId.title %></h1>
-        <h2>Quantity: <%= p.quantity %></h2>
+        <h1><%= title %></h1>
+        <h2>Quantity: <%= quantity %></h2>
+        <h2>Price: <%= price %></h2>
+        <% itemTotalPrice = quantity * price %>
+        <!-- <h2>You pay: <%= itemTotalPrice %></h2> -->
+        <% totalPrice = totalPrice + itemTotalPrice %>
+        <!-- <%= moment(p.productId.createdAt).format("YYYY-DD-MM") %>
+        <%= moment(p.productId.createdAt).format("hh:ss:a") %> -->
         <form action="/cart_delete_item" method="POST">
           <input type="hidden" value="<%= p.productId._id %>" name="id" />
           <button type="submit" class="btn danger">Delete</button>
@@ -16,17 +30,20 @@
       </li>
       <% }) %>
     </ul>
-    <% } else { %>
-    <h1>Cart is empty, try adding some products</h1>
-    <br />
-    <a href="/products" class="btn">Go to shop</a>
-    <% } %>
 
-    <h1 class="center">Total Price:</h1>
-    <h2><%= products.totalPrice %></h2>
+    <h1 class="center">Total Price: ₦<%= totalPrice %></h1>
+
+    <% } else { %>
+    <h1 class="centered">Cart is empty, try adding some products</h1>
+    <br />
+    <div class="centered">
+      <a href="/products" class="btn">Go to shop</a><br><br>
+    </div>
+    <% } %>
 
     <hr />
     <div class="centered">
+      <a href="/products" class="btn" >Back</a>
       <form action="/create_order" method="POST">
         <button type="submit" class="btn">Order Now!</button>
       </form>

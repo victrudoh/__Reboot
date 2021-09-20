@@ -117,7 +117,7 @@ module.exports = {
 
   toggleDisableProductController: async (req, res, next) => {
     const prodId = req.body.productId;
-    console.log("this is a comment on products", prodId);
+    console.log("this is a comment on product toggle", prodId);
     const product = await Product.findById(prodId);
     const productState = product.isDisabled;
     product.isDisabled = !productState;
