@@ -21,9 +21,8 @@
         <% itemTotalPrice = quantity * price %>
         <!-- <h2>You pay: <%= itemTotalPrice %></h2> -->
         <% totalPrice = totalPrice + itemTotalPrice %>
-        <!-- <%= moment(p.productId.createdAt).format("YYYY-DD-MM") %>
-        <%= moment(p.productId.createdAt).format("hh:ss:a") %> -->
         <form action="/cart_delete_item" method="POST">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <input type="hidden" value="<%= p.productId._id %>" name="id" />
           <button type="submit" class="btn danger">Delete</button>
         </form>
@@ -45,8 +44,13 @@
     <div class="centered">
       <a href="/products" class="btn" >Back</a>
       <form action="/create_order" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button type="submit" class="btn">Order Now!</button>
       </form>
+      <!-- <form action="/invoice" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="btn">Generate invoice</button>
+      </form> -->
     </div>
   </main>
 </div>

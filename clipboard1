@@ -1,24 +1,41 @@
- postAddProductController: async(req, res, next) => {
-    const user = await User.findOne()
-    console.log(user);
-    const title = req.body.title;
-    const media = req.body.media;
-    const price = req.body.price;
-    const description = req.body.description;
-    const product = new Product({
-      title: title,
-      media: media,
-      price: price,
-      description: description,
-      userId: user._id
-    });
-   await product
-      .save()
-      .then((result) => {
-        console.log("Created New Product");
-        res.redirect("/products");
-      })
-      .catch((err) => {
-        console.log(err, "postAddProductController");
-      });
-  },
+<%- include('../partials/header.ejs') %>
+
+<div class="container">
+  <main>
+    <% if (prods.length > 0) { %>
+    <h1 class="cardTitle">SHOP</h1>
+    <div class="grid">
+      <% for (let product of prods ) { %>
+      <article class="card product-item">
+        <header class="card_header">
+          <h1 class="product_title"><%= product.title %></h1>
+        </header>
+        <div class="card_image">
+          <img src="<%= product.media %>" alt="No media" />
+        </div>
+        <div class="card_content">
+          <h2 class="product_price">#<%= product.price %></h2>
+          <p class="product_description"><%= product.description %></p>
+        </div>
+        <div class="card_actions">
+          <a href="/admin/edit_product/<%= product.id %>?edit=true" class="btn">Edit</a>
+          <!-- <form action="/admin/delete_product" method="POST">
+            <input type="hidden" value="<%= product.id %>" name="productId">
+            <button type="submit" class="btn">Delete</button>
+          </form> -->
+          <form action="/admin/disable_product" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" value="<%= product.id %>" name="productId">
+            <button type="submit" class="btn"><% if (product.isDisabled) { %> Enable <% } else { %> Disable <% } %> Product</button>
+          </form>
+        </div>
+      </article>
+      <% } %>
+    </div>
+    <% } else { %>
+    <h1>No Products in shop!</h1>
+    <% } %>
+  </main>
+</div>
+
+<%- include('../partials/footer.ejs') %>

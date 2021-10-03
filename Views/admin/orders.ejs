@@ -1,9 +1,12 @@
 <%- include('../partials/header.ejs') %>
 
 <main>
+  <% if (orders.length <= 0) { %>
+  <h1>Nothing there!</h1>
+  <% } else { %>
   <div class="form-control">
-    <form action="/orders" method="POST">
-        <label for="paymentStatus" class="mt-2">Sort by:</label>
+    <form action="/admin/orders" method="POST">
+      <label for="paymentStatus" class="mt-2">Sort by:</label>
         <select name="paymentStatus" id="paymentStatus" class="mb-3" required>
           <option>Choose option</option>
           <option value="full">Payment status: Full</option>
@@ -15,12 +18,8 @@
     </form>
   </div>
   <br />
-  <% if (orders.length <= 0) { %>
-  <h1>Nothing there!</h1>
-  <% } else { %>
   <ul class="orders">
-    <% totalPrice = 0 %> 
-    <% orders.forEach(order => { %>
+    <% totalPrice = 0 %> <% orders.forEach(order => { %>
     <li class="orders__item">
       <div class="spaceBetween">
         <h1>Order - # <%= order._id %></h1>
@@ -35,7 +34,10 @@
           totalPrice + itemTotalPrice %>
         </li>
         <% }); %>
-        Payment Status: <%= order.paymentStatus %>
+        <div class="spaceBetween">
+          Payment Status: <%= order.paymentStatus %>
+          <div>Ordered by: <%= order.user.name %></div>
+        </div>
         <div class="spaceBetween">
           <h3>Total Price: ₦<%= totalPrice %></h3>
           <a href="/invoice/<%= order._id %>" class="btn">Generate invoice</a>

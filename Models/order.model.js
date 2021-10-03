@@ -2,28 +2,39 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const orderSchema = new Schema({
-  products: [
-    {
-      product: { type: Object, required: true },
-      quantity: { type: Number, required: true },
+const orderSchema = new Schema(
+  {
+    products: [
+      {
+        product: { type: Object, required: true },
+        quantity: { type: Number, required: true },
+      },
+    ],
+    user: {
+      name: {
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+      },
     },
-  ],
-  user: {
-    name: {
+    paymentStatus: {
       type: String,
       required: true,
+      default: 'unpaid',
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
   },
-  userId: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
-  },
-},
-{
-  timestamps: true
-});
+  {
+    timestamps: true,
+  }
+);
 
 orderSchema.methods.getOrders = function () {
   console.log('order==========================');

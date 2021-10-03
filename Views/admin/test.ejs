@@ -5,14 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/cart.css" />
-    <link rel="stylesheet" href="/css/orders.css" />
     <link rel="stylesheet" href="/css/product.css" />
-    <link rel="stylesheet" href="/css/login.css" />
-    <link rel="stylesheet" href="/css/errorMessage.css" />
-    <link rel="stylesheet" href="/css/invoice.css" />
-    <link rel="stylesheet" href="/css/index.css" />
-    <!-- <link rel="stylesheet" href="/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <title><%= pageTitle %></title>
   </head>
   <body>
@@ -96,3 +90,37 @@
       </nav>
     </header>
 
+    <div class="container">
+
+        <main>
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 mt-3 mb-3 text-center">
+
+              <% for (let post of prods ) { %>
+                <div class="col">
+                  <input type="hidden" name="id" value="<%= post.id %>">
+                    <div class="card mb-4 mt-5 rounded-3 shadow-lg" style="min-height: 300px; max-height: 500px;">
+                      <div class="card-header h-23 py-3">
+                        <% if (post.media){%>
+                          <div class="perspective">
+                            <h4 class="onFocus my-0"><img src="<%= post.media %>" class="img-fluid" alt="No media"></h4>
+                          </div>
+                        <% } %>
+                      </div>
+                      <div class="showOnHover card-body">
+                        <h1 class="card-title pricing-card-title"><%= post.caption %></h1>
+                        <!-- <h3><small class="text-muted fw-normal"><%= post.description %></small></h3> <br> -->
+                        <h4><small class="text-primary fw-lighter">~<%= post.author == '' ? 'Anonymous' : post.author %>~</small></h4><br>
+                        <a href="/gallery/viewPost/<%= post.id %>">View post</a>
+                      </div>
+                    </div>
+                </div>
+              <% } %>
+
+
+            </div>
+        </main>
+        
+
+    </div>
+
+<%- include('../partials/footer.ejs') %>

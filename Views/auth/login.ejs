@@ -1,0 +1,26 @@
+<%- include('../partials/header.ejs') %>
+
+<div class="login_form_container">
+  <% if (errorMessage) { %>
+    <div class="user_message user_message_error"><%= errorMessage %></div>
+  <% } %>
+  <h1>Login</h1>
+  <form action="/login" method="POST">
+    <!-- <div class="login_form_control">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" />
+    </div> -->
+    <div class="login_form_control">
+      <label for="email">Email:</label>
+      <input type="text" name="email" id="email" />
+    </div>
+    <div class="login_form_control">
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" />
+    </div>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+<%- include('../partials/footer.ejs') %>

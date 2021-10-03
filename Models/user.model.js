@@ -1,15 +1,30 @@
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
 
 const userSchema = new Schema({
   username: {
     type: String,
-    required: true,
+    required: 'please enter username',
   },
   email: {
     type: String,
-    required: true,
+    required: 'please enter email address',
+    lowercase: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  physicalAddress: {
+    type: String,
+    required: true
+  },
+  role: {
+    type: String,
+    required: true
   },
   cart: {
     items: [
