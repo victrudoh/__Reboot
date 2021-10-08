@@ -4,7 +4,35 @@ const moment = require("moment");
 
 module.exports = {
   getProductController: async (req, res, next) => {
+    // const query = {}
+    // console.log('req.body: ' , req.body);
+    // for (let value of Object.keys(req.body)) {
+    //   query[value] = req.body[value];
+    // }
+    let message = req.flash("error");
+    //so the error message box will not always be active
+    if (message.length > 0) {
+      message = message[0];
+    } else {
+      message = null;
+    }
     Product.find({ isDisabled: false })
+      .then((products) => {
+        res.render("shop/product_list", {
+          prods: products,
+          pageTitle: "Products",
+          path: "product_list",
+          role: req.user?.role,
+          errorMessage: message,
+        });
+      })
+      .catch((err) => {
+        console.log(err, "getProductController");
+      });
+  },
+
+  postSortProductsController: (req, res, next) => {
+    Product.find({ category: req.body.category, isDisabled: false })
       .then((products) => {
         res.render("shop/product_list", {
           prods: products,
@@ -14,7 +42,7 @@ module.exports = {
         });
       })
       .catch((err) => {
-        console.log(err, "getProductController");
+        console.log(err, "postSortProductsController");
       });
   },
 
@@ -26,7 +54,7 @@ module.exports = {
           product: product,
           pageTitle: product.title,
           path: "product_list", //so the products header will be active when we view the product
-          role: req.user.role,
+          role: req.user?.role,
         });
       })
       .catch((err) => {
@@ -68,6 +96,8 @@ module.exports = {
 
   postCartController: (req, res, next) => {
     const prodId = req.body.productId;
+    const qty = req.body.qty;
+    console.log(qty);
     console.log(prodId);
     Product.findById(prodId)
       .then((product) => {
@@ -76,10 +106,14 @@ module.exports = {
           "🚀 ~ file: shop.controller.js ~ line 68 ~ .then ~ isCartEmpty",
           isCartEmpty
         );
-        return req.user.addToCart(product);
+        if (product.inStock < qty) {
+            req.flash("error", "Sorry, we do not have that much");
+            return res.redirect("/products");
+        }
+        return req.user.addToCart(product, qty);
       })
       .then((result) => {
-        console.log(result);
+        // console.log("result in postCartController: ", result);
         res.redirect("/cart");
       })
       .catch((err) => {
@@ -98,13 +132,26 @@ module.exports = {
   },
 
   postOrderController: async (req, res, next) => {
-    // if (req.user.isCartEmpty) {
-    //   return res.redirect('/cart');
-    // }
+    if (req.user.isCartEmpty) {
+      return res.redirect('/cart');
+    }
     const user = await req.user.populate("cart.items.productId");
     const products = user.cart.items.map((i) => {
       return { quantity: i.quantity, product: { ...i.productId._doc } };
     });
+    const products1 = user.cart.items.map( async (i) => {
+      const qtyOrdered = i.quantity;
+      const prodOrdered = i.productId._id;
+      const prod = await Product.findById(prodOrdered);
+      prod.inStock = prod.inStock - qtyOrdered;
+      if (prod.inStock <= 0) {
+        const productState = prod.isDisabled;
+        prod.isDisabled = !productState;
+      } 
+      await prod.save();
+      console.log("prod.inStock: ", prod.inStock);
+    });
+    console.log('Quantity of goods: ', quantity);
     const newOrder = new Order({
       user: {
         name: req.user.username,

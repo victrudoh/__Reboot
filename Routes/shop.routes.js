@@ -8,6 +8,8 @@ router.get("/", shopController.getIndexController);
 
 router.get("/products", shopController.getProductController);
 
+router.post("/productsSort", shopController.postSortProductsController);
+
 router.get("/products/:productId", shopController.getProductByIdController);
 
 router.get("/cart", isAuthenticated, shopController.getcartController);

@@ -2,8 +2,24 @@
 
 <div class="container">
   <main>
+        <h1 class="cardTitle">ADMIN PRODUCTS</h1>
+    <div class="form-control">
+      <form action="/admin/productsSort" method="POST">
+        <label for="category" class="mt-2">Sort by:</label>
+        <select name="category" id="category" class="mb-3" required>
+          <option>Choose category</option>
+          <option value="groceries">Groceries</option>
+          <option value="utensils">Utensils</option>
+          <option value="medical">Medical</option>
+          <option value="lifestyle">Lifestyle</option>
+          <option value="toiletries">Toiletries</option>
+        </select>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button type="submit" class="btn">Sort</button>
+      </form>
+    </div>
     <% if (prods.length > 0) { %>
-    <h1 class="cardTitle">SHOP</h1>
+    <!-- <h1 class="cardTitle">SHOP</h1> -->
     <div class="grid">
       <% for (let product of prods ) { %>
       <article class="card product-item">
@@ -14,7 +30,8 @@
           <img src="<%= product.media %>" alt="No media" />
         </div>
         <div class="card_content">
-          <h2 class="product_price">#<%= product.price %></h2>
+          <h2 class="product_price">₦<%= product.price %></h2>
+          <h3 class="product_price">In stock: <%= product.inStock %></h3>
           <p class="product_description"><%= product.description %></p>
         </div>
         <div class="card_actions">

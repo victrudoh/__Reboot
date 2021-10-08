@@ -24,12 +24,14 @@ module.exports = {
     const media = req.body.media;
     const price = req.body.price;
     const category = req.body.category;
+    const inStock = req.body.inStock;
     const description = req.body.description;
     const product = new Product({
       title: title,
       media: media,
       price: price,
       category: category,
+      inStock: inStock,
       description: description,
       userId: req.user,
       role: req.user.role,
@@ -75,6 +77,7 @@ module.exports = {
     const updatedMedia = req.body.media;
     const updatedPrice = req.body.price;
     const updatedCategory = req.body.category;
+    const updatedInStock = req.body.inStock;
     const updatedDescription = req.body.description;
     Product.findById(prodId)
       .then((product) => {
@@ -82,6 +85,7 @@ module.exports = {
           (product.media = updatedMedia),
           (product.price = updatedPrice),
           (product.category = updatedCategory),
+          (product.inStock = updatedInStock),
           (product.description = updatedDescription);
 
         product.save();
@@ -112,6 +116,21 @@ module.exports = {
       });
   },
 
+  postSortProductsController: (req, res, next) => {
+    Product.find({ category: req.body.category })
+      .then((products) => {
+        res.render("admin/adminProduct_list", {
+          prods: products,
+          pageTitle: "Products",
+          path: "product_list",
+          role: req.user?.role,
+        });
+      })
+      .catch((err) => {
+        console.log(err, "postSortProductsController");
+      });
+  },
+
   postDeleteProductController: (req, res, next) => {
     const prodId = req.body.productId;
     Product.findByIdAndRemove(prodId)
@@ -125,9 +144,9 @@ module.exports = {
   },
 
   getOrdersController: async (req, res, next) => {
-    const query = {}
-    for(let value of Object.keys(req.body)){
-      query[value] = req.body[value]
+    const query = {};
+    for (let value of Object.keys(req.body)) {
+      query[value] = req.body[value];
     }
     Order.find(query)
       .then((orders) => {

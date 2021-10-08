@@ -39,3 +39,72 @@
 </div>
 
 <%- include('../partials/footer.ejs') %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ***** USER ***** -->
+
+
+
+<%- include('../partials/header.ejs') %>
+
+<div class="container">
+  <main>
+    <% if (prods.length > 0) { %>
+    <h1 class="cardTitle">SHOP</h1>
+    <div class="grid">
+      <% for (let product of prods ) { %>
+      <article class="card product-item">
+        <header class="card_header">
+          <h1 class="product_title"><%= product.title %></h1>
+        </header>
+        <div class="card_image">
+          <img src="<%= product.media %>" alt="No media" />
+        </div>
+        <div class="card_content">
+          <h2 class="product_price">#<%= product.price %></h2>
+          <p class="product_description"><%= product.description %></p>
+        </div>
+        <div class="card_actions">
+          <a href="/products/<%= product.id %>" class="btn">Details</a>
+          <% if (isAuthenticated) { %>
+          <form action="/cart" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <button type="submit" class="btn">Add to cart</button>
+            <input type="hidden" name="productId" value="<%= product.id %>" />
+          </form>
+          <% } %>
+        </div>
+      </article>
+      <% } %>
+    </div>
+    <% } else { %>
+    <h1>No Products in shop!</h1>
+    <% } %>
+  </main>
+</div>
+
+<%- include('../partials/footer.ejs') %>
+
+
+
+

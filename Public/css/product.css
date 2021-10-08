@@ -9,6 +9,7 @@
 .cardSubTitle {
   text-align: center;
   margin: 5px;
+  margin-top: 10px;
 }
 
 .grid {
@@ -29,6 +30,7 @@
   max-height: 500px;
   min-height: 500px;
   justify-content: center;
+  margin-bottom: 20px;
   margin-top: 35px;
   max-width: 300px;
   min-width: 300px;
@@ -69,6 +71,24 @@
   /* margin: 0 0.25rem; */
   margin-bottom: 15px;
 }
+
+.product_stock {
+  margin-bottom: 6px;
+  margin-top: -12px;
+}
+
+.product_description {
+  margin-bottom: 10px;
+  margin-top: 3px;
+}
+
+.product_quantity {
+  border-radius: 6px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+
 
 .btn {
   font: inherit;

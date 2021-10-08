@@ -14,6 +14,8 @@ router.post("/add_product", isAuthenticated, checkAdmin, adminController.postAdd
 
 router.get("/products", checkAdmin, adminController.getProductController);
 
+router.post("/productsSort", adminController.postSortProductsController);
+
 router.get("/edit_product/:productId", isAuthenticated, checkAdmin, adminController.getEditProductController);
 
 router.post("/edit_product", isAuthenticated, checkAdmin, adminController.postEditProductController);

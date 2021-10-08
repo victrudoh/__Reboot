@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStoreSession = require("connect-mongodb-session")(session);
 const csrf = require('csurf');
-const flash = require("connect-flash");
+const flash = require("connect-flash"); //used to send alerts back to the user
 
 const port = process.env.PORT || 3033;
 

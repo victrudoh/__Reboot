@@ -54,6 +54,13 @@
               >Admin Products</a
             >
           </li>
+          <li class="main-header_item">
+              <a
+                class="<%= path === 'allOrders' ? 'active' : '' %>"
+                href="/admin/orders"
+                >All orders</a
+              >
+            </li>
           <% } %> <% } %>
         </ul>
         <ul class="main-header_item-list_right">
@@ -106,10 +113,10 @@
               <div class="payment-details">
                 <div class="row">
                   <div class="col-sm-6">
-                    <span></span>
-                    <strong> </strong>
+                    <span>From</span>
+                    <strong>Reboot</strong>
                     <p>
-                      <br />
+                      Your trusted online store<br />
                       <br />
                       <br />
                       <br />
@@ -146,9 +153,11 @@
                   totalPrice + itemTotalPrice %>
                 <% }); %>
                 <div class="total text-right">
+                  <br>
+                    <small>No discount today, our dev is lazy</small>
                   <div class="field grand-total">
                     Total <span>₦<%= totalPrice %></span>
-                    <% totalPrice = 0 %>
+                    <% totalPrice = 0 %> 
                   </div>
                 </div>
 

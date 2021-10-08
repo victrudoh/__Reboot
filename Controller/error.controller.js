@@ -5,7 +5,7 @@ module.exports = {
     res.status(404).render("404", {
       pageTitle: "404",
       path: "",
-      role: req.user.role,
+      role: req.user?.role,
     });
   },
 };

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const productScheme = new Schema({
+const productSchema = new Schema({
   title: {
     type: String,
     required: true
@@ -17,6 +17,10 @@ const productScheme = new Schema({
   },
   category: {
     type: String,
+    required: true
+  },
+  inStock: {
+    type: Number,
     required: true
   },
   description: {
@@ -36,7 +40,16 @@ const productScheme = new Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Product', productScheme);
+// productSchema.methods.deleteFromStock = function (qty, id) {
+//   if (this._id === id) {
+//     this.inStock = this.inStock - qty;
+//     return this.save();
+//   } else {
+//     return next();
+//   }
+// };
+
+module.exports = mongoose.model('Product', productSchema);
 
 
 

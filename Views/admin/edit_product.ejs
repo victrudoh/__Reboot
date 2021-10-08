@@ -19,13 +19,17 @@
             <div class="form-control">
                 <label for="category" class="mt-2">Category</label>
                   <select name="category" id="category" class="form-control" required>
-                      <option>Choose category</option>
+                      <option value="<% if (editing) { %><%= product.category %><% } %>"><% if (editing) { %><%= product.category %><% } else { %>Choose category <% } %></option>
                       <option value="groceries">Groceries</option>
                       <option value="utensils">Utensils</option>
                       <option value="medical">Medical</option>
                       <option value="lifestyle">Lifestyle</option>
                       <option value="toiletries">Toiletries</option>
                   </select>
+            </div>
+            <div class="form-control">
+                <label for="inStock">in Stock</label>
+                <input type="number" name="inStock" id="inStock" step="1" value="<% if (editing) { %><%= product.inStock %><% } %>">
             </div>
             <div class="form-control">
                 <label for="description">Description</label>
