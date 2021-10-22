@@ -20,10 +20,19 @@ const orderSchema = new Schema(
         required: true,
       },
     },
-    paymentStatus: {
+    paymentOption: {
       type: String,
       required: true,
       default: 'unpaid',
+    },
+    paid: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    cashier: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     userId: {
       type: Schema.Types.ObjectId,

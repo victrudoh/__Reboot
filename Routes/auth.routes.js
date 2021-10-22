@@ -14,4 +14,10 @@ router.get("/signup", authController.getSignupController);
 
 router.post("/signup", authController.postSignupController);
 
+router.get("/profile", authController.getProfileController);
+
+router.post("/profile", authController.getEditProfileController);
+
+router.post("/edit_profile", authController.postEditProfileController);
+
 module.exports = router;

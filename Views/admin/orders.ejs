@@ -1,25 +1,26 @@
 <%- include('../partials/header.ejs') %>
 
 <main>
-  <% if (orders.length <= 0) { %>
-  <h1>Nothing there!</h1>
-  <% } else { %>
-  <div class="form-control">
+
+  <div class="">
     <form action="/admin/orders" method="POST">
-      <label for="paymentStatus" class="mt-2">Sort by:</label>
-        <select name="paymentStatus" id="paymentStatus" class="mb-3" required>
-          <option>Choose option</option>
-          <option value="full">Payment status: Full</option>
-          <option value="deposit">Payment status: Deposit</option>
-          <!-- <option value="date">Date</option> -->
-        </select>
+        <label for="date" class="mt-2">Sort by date:</label>
+        <input type="date" name="date" id="date">
+        <button type="submit" class="btn btn-outline-secondary my-1">Sort</button>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-      <button type="submit" class="btn">Sort</button>
+      <div class="spaceBetween">
+        <a href="/admin/ordersPayment" class="btn btn-outline-secondary">Sort by Payment type</a>
+      </div>
     </form>
   </div>
   <br />
+  <% if (orders.length <= 0) { %>
+  <h1>Nothing there!</h1>
+  <% } else { %>
   <ul class="orders">
-    <% totalPrice = 0 %> <% orders.forEach(order => { %>
+    <% totalPrice = 0 %>
+    <% totalIncome = 0 %>
+    <% orders.forEach(order => { %>
     <li class="orders__item">
       <div class="spaceBetween">
         <h1>Order - # <%= order._id %></h1>
@@ -35,12 +36,18 @@
         </li>
         <% }); %>
         <div class="spaceBetween">
-          Payment Status: <%= order.paymentStatus %>
+          Payment type: <%= order.paymentOption %>
           <div>Ordered by: <%= order.user.name %></div>
+          <div><% if (!order.paid) { %>
+            <h4 style="color: red;">Payment Status: Pending</h4>
+            <% } else { %>
+            <h3 style="color: green;">Payment Confirmed by <%= order.cashier.username %></h3>
+            <% } %></div>
         </div>
         <div class="spaceBetween">
           <h3>Total Price: ₦<%= totalPrice %></h3>
-          <a href="/invoice/<%= order._id %>" class="btn">Generate invoice</a>
+          <% totalIncome = totalIncome + totalPrice %>
+          <!-- <a href="/invoice/<%= order._id %>" class="btn btn-outline-secondary">Generate invoice</a> -->
         </div>
         <% totalPrice = 0 %>
       </ul>
@@ -49,11 +56,12 @@
   </ul>
   <% } %>
 
-  <!-- <div class="centered">
-        <form action="/create_order" method="POST">
-          <button type="submit" class="btn">Order Now!</button>
-        </form>
-      </div> -->
+  <h2 style="text-align: center; color: white;" class="fixed-bottom bg-secondary text-center">Total Income: ₦<%= totalIncome %></h2>
+  <% totalIncome = 0 %>
+
 </main>
+
+
+
 
 <%- include('../partials/footer.ejs') %>

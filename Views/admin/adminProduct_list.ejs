@@ -2,10 +2,11 @@
 
 <div class="container">
   <main>
-        <h1 class="cardTitle">ADMIN PRODUCTS</h1>
-    <div class="form-control">
+    <h1 class="cardTitle fw-bolder">ADMIN PRODUCTS</h1>
+    <% if (!disable) { %>
+    <div class="">
       <form action="/admin/productsSort" method="POST">
-        <label for="category" class="mt-2">Sort by:</label>
+        <label for="category" class="mt-2 mx-2">Sort by:</label>
         <select name="category" id="category" class="mb-3" required>
           <option>Choose category</option>
           <option value="groceries">Groceries</option>
@@ -14,43 +15,51 @@
           <option value="lifestyle">Lifestyle</option>
           <option value="toiletries">Toiletries</option>
         </select>
+        <a href="/admin/add_product" class="btn btn-outline-secondary float-end">Add Product</a>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-        <button type="submit" class="btn">Sort</button>
+        <button type="submit" class="btn btn-outline-secondary my-1">Sort</button>
       </form>
     </div>
+    <% } %>
+
     <% if (prods.length > 0) { %>
-    <!-- <h1 class="cardTitle">SHOP</h1> -->
-    <div class="grid">
+  <div class="album py-5">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <% for (let product of prods ) { %>
-      <article class="card product-item">
-        <header class="card_header">
-          <h1 class="product_title"><%= product.title %></h1>
-        </header>
-        <div class="card_image">
-          <img src="<%= product.media %>" alt="No media" />
+        <div class="col">
+          <div class="card shadow-sm" style="min-height: 500px; max-height: 550px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);">
+            <img src="<%= product.media %>" alt="No Media" class="bd-placeholder-img card-img-top p-4" width="100%" height="350" >
+          <div class="card-body">
+              <h2><%= product.title %></h2>
+              <small class="text-muted"><%= product.description %></small><br>
+              <small class="text-muted">₦<%= product.price %></small>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href="/admin/edit_product/<%= product.id %>?edit=true" class="btn btn-outline-secondary">Edit</a>
+               <form action="/admin/disable_product" method="POST">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <input type="hidden" value="<%= product.id %>" name="productId">
+                  <button type="submit" class="btn btn-outline-secondary mx-2"><% if (product.isDisabled) { %> Enable <% } else { %> Disable <% } %> Product</button>
+                </form>
+                </div>
+                
+                <small class="text-muted">In stock: <%= product.inStock %></small>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card_content">
-          <h2 class="product_price">₦<%= product.price %></h2>
-          <h3 class="product_price">In stock: <%= product.inStock %></h3>
-          <p class="product_description"><%= product.description %></p>
-        </div>
-        <div class="card_actions">
-          <a href="/admin/edit_product/<%= product.id %>?edit=true" class="btn">Edit</a>
-          <!-- <form action="/admin/delete_product" method="POST">
-            <input type="hidden" value="<%= product.id %>" name="productId">
-            <button type="submit" class="btn">Delete</button>
-          </form> -->
-          <form action="/admin/disable_product" method="POST">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <input type="hidden" value="<%= product.id %>" name="productId">
-            <button type="submit" class="btn"><% if (product.isDisabled) { %> Enable <% } else { %> Disable <% } %> Product</button>
-          </form>
-        </div>
-      </article>
       <% } %>
+      </div>
     </div>
+  </div>
     <% } else { %>
-    <h1>No Products in shop!</h1>
+      <% if (disable) { %>
+        <h1>No Disabled Product</h1>
+        <a href="/admin/dashboard" class="btn btn-outline-secondary">Back</a>
+      <% } else { %>
+        <h1>No Products in shop!</h1>
+      <% } %>
     <% } %>
   </main>
 </div>

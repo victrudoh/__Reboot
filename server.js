@@ -63,6 +63,7 @@ const User = require("./Models/user.model");
 const adminRouter = require("./routes/admin.routes");
 const shopRouter = require("./Routes/shop.routes");
 const authRouter = require("./Routes/auth.routes");
+const cashierRouter = require("./Routes/cashier.routes");
 
 app.use((req, res, next) => {
   if (!req.session.user) {
@@ -79,6 +80,7 @@ app.use((req, res, next) => {
 app.use("/", shopRouter);
 app.use("/admin", adminRouter);
 app.use("/", authRouter);
+app.use("/cashier", cashierRouter);
 
 app.use(errorController.get404);
 

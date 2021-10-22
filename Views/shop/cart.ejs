@@ -1,7 +1,7 @@
 <%- include('../partials/header.ejs') %>
 
-<div class="container">
-  <main>
+<div class="container my-5">
+  <main style="height: 78vh;">
     <h1 class="center">Cart</h1>
     <% if (products.length > 0 ) { %>
 
@@ -36,16 +36,16 @@
     <h1 class="centered">Cart is empty, try adding some products</h1>
     <br />
     <div class="centered">
-      <a href="/products" class="btn">Go to shop</a><br><br>
+      <a href="/products" class="btn btn-outline-secondary">Go to shop</a><br><br>
     </div>
     <% } %>
 
     <hr />
     <div class="centered">
-      <a href="/products" class="btn" >Back</a>
+      <a href="/products" class="btn btn-outline-secondary mb-3" >Back</a>
       <form action="/create_order" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <button type="submit" class="btn">Order Now!</button>
+        <button type="submit" class="btn btn-outline-warning">Order Now!</button>
       </form>
       <!-- <form action="/invoice" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">

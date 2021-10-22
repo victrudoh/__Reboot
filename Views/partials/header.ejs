@@ -12,13 +12,17 @@
     <link rel="stylesheet" href="/css/errorMessage.css" />
     <link rel="stylesheet" href="/css/invoice.css" />
     <link rel="stylesheet" href="/css/index.css" />
-    <!-- <link rel="stylesheet" href="/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="/css/cashierOrder.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/profile.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <title><%= pageTitle %></title>
   </head>
   <body>
-    <header class="main-header">
+    <header class="main-header navbar-dark fixed-top bg-dark">
       <nav class="main-header_nav">
         <ul class="main-header_item-list">
+          <% if (role === 'user' || role === undefined) { %>
           <li class="main-header_item">
             <a class="<%= path === 'index' ? 'active' : '' %>" href="/">Home</a>
           </li>
@@ -29,68 +33,61 @@
               >Products</a
             >
           </li>
-          <% if (isAuthenticated) { %>
-            <li class="main-header_item">
-              <a class="<%= path === 'cart' ? 'active' : '' %>" href="/cart"
-                >Cart</a
-              >
-            </li>
-            <li class="main-header_item">
-              <a class="<%= path === 'orders' ? 'active' : '' %>" href="/orders"
-                >Orders</a
-              >
-            </li>
-            <% if (role === 'admin') { %>
-            <li class="main-header_item">
-              <a
-                class="<%= path === 'add_product' ? 'active' : '' %>"
-                href="/admin/add_product"
-                >Add Product</a
-              >
-            </li>
-            <li class="main-header_item">
-              <a
-                class="<%= path === 'adminProduct_list' ? 'active' : '' %>"
-                href="/admin/products"
-                >Admin Products</a
-              >
-            </li>
-            <!-- <li class="main-header_item">
-              <a
-                class="<%= path === 'dashboard' ? 'active' : '' %>"
-                href="/admin/dashboard"
-                >Dashboard</a
-              >
-            </li> -->
-            <li class="main-header_item">
-              <a
-                class="<%= path === 'allOrders' ? 'active' : '' %>"
-                href="/admin/orders"
-                >All orders</a
-              >
-            </li>
-            <% } %>
-          <% } %>
+          <% } %> <% if (isAuthenticated) { %> <% if (role === 'user') { %>
+          <li class="main-header_item">
+            <a class="<%= path === 'cart' ? 'active' : '' %>" href="/cart"
+              >Cart</a
+            >
+          </li>
+          <li class="main-header_item">
+            <a class="<%= path === 'orders' ? 'active' : '' %>" href="/orders"
+              >Orders</a
+            >
+          </li>
+          <% } %> <% if (role === 'cashier') { %>
+          <li class="main-header_item">
+            <a
+              class="<%= path === 'orders' ? 'active' : '' %>"
+              href="/cashier/orders"
+              >Cashier Orders</a
+            >
+          </li>
+          <% } %> <% if (role === 'admin') { %>
+          <li class="main-header_item">
+            <a
+              class="<%= path === 'dashboard' ? 'active' : '' %>"
+              href="/admin/dashboard"
+              >Dashboard</a
+            >
+          </li>
+          <% } %> <% } %>
         </ul>
         <ul class="main-header_item-list_right">
           <% if (!isAuthenticated) { %>
-            <li class="main-header_item_right">
-              <a class="<%= path === 'login' ? 'active' : '' %>" href="/login"
-                >Login</a
-              >
-            </li>
-            <li class="main-header_item_right">
-              <a class="<%= path === 'signup' ? 'active' : '' %>" href="/signup"
-                >Signup</a
-              >
-            </li>
+          <li class="main-header_item_right">
+            <a class="<%= path === 'login' ? 'active' : '' %>" href="/login"
+              >Login</a
+            >
+          </li>
+          <li class="main-header_item_right">
+            <a class="<%= path === 'signup' ? 'active' : '' %>" href="/signup"
+              >Signup</a
+            >
+          </li>
           <% } else { %>
-            <li class="main-header_item_right">
-              <form action="/logout" method="POST">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit">Log Out</button>
-              </form>
-            </li>
+            <% if (role === 'user') { %>
+          <li class="main-header_item_right">
+            <a class="<%= path === 'profile' ? 'active' : '' %>" href="/profile"
+              >Profile</a
+            >
+          </li>
+            <% } %>
+          <li class="main-header_item_right">
+            <form action="/logout" method="POST">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button type="submit" class="btn btn-outline-warning my-1" >Log Out</button>
+            </form>
+          </li>
           <% } %>
         </ul>
       </nav>

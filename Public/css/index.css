@@ -1,8 +1,14 @@
 .index {
-    background-image: url('../images/womanShopping.jpg');
+    background-image: url('../images/bg1.jpg');
     background-size: cover;
-    height: 100vh;
-    overflow: hidden;
+    /* margin-bottom: 10px; */
+    /* height: 100vh; */
+    /* overflow: hidden; */
+}
+
+.transparentStuff {
+    background-color: #ffc107;
+    /* opacity: 0.4; */
 }
 
 .indexText {

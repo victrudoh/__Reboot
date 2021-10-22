@@ -19,7 +19,7 @@
   justify-content: space-around;
 }
 
-.card {
+/* .card {
   align-items: center;
   background-color: #522852;
   border-radius: 8px;
@@ -34,9 +34,9 @@
   margin-top: 35px;
   max-width: 300px;
   min-width: 300px;
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
   text-align: center;
-}
+} */
 
 .card__header,
 .card__content {
@@ -90,7 +90,7 @@
 
 
 
-.btn {
+/* .btn {
   font: inherit;
   border: 1px solid #522852;
   color: #522852;
@@ -108,7 +108,7 @@
 .btn:active {
   background-color: salmon;
   color: white;
-}
+} */
 
 .btn.danger {
   color: red;

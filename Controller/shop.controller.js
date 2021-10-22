@@ -32,6 +32,13 @@ module.exports = {
   },
 
   postSortProductsController: (req, res, next) => {
+    let message = req.flash("error");
+    //so the error message box will not always be active
+    if (message.length > 0) {
+      message = message[0];
+    } else {
+      message = null;
+    }
     Product.find({ category: req.body.category, isDisabled: false })
       .then((products) => {
         res.render("shop/product_list", {
@@ -39,6 +46,7 @@ module.exports = {
           pageTitle: "Products",
           path: "product_list",
           role: req.user?.role,
+          errorMessage: message,
         });
       })
       .catch((err) => {
@@ -47,6 +55,13 @@ module.exports = {
   },
 
   getProductByIdController: async (req, res, next) => {
+    let message = req.flash("error");
+    //so the error message box will not always be active
+    if (message.length > 0) {
+      message = message[0];
+    } else {
+      message = null;
+    }
     const prodId = req.params.productId;
     Product.findById(prodId)
       .then((product) => {
@@ -55,6 +70,7 @@ module.exports = {
           pageTitle: product.title,
           path: "product_list", //so the products header will be active when we view the product
           role: req.user?.role,
+          errorMessage: message,
         });
       })
       .catch((err) => {
@@ -63,6 +79,21 @@ module.exports = {
   },
 
   getIndexController: async (req, res, next) => {
+    Product.find()
+      .then((products) => {
+        res.render("shop/index", {
+          prods: products,
+          pageTitle: "Shop",
+          path: "index",
+          csrfToken: req.csrfToken(),
+          role: req.user?.role,
+        });
+      })
+      .catch((err) => {
+        console.log(err, "getIndexController");
+      });
+  },
+  getProfileController: async (req, res, next) => {
     Product.find()
       .then((products) => {
         res.render("shop/index", {
@@ -107,8 +138,8 @@ module.exports = {
           isCartEmpty
         );
         if (product.inStock < qty) {
-            req.flash("error", "Sorry, we do not have that much");
-            return res.redirect("/products");
+          req.flash("error", "Sorry, we do not have that much");
+          return res.redirect("/products");
         }
         return req.user.addToCart(product, qty);
       })
@@ -132,14 +163,21 @@ module.exports = {
   },
 
   postOrderController: async (req, res, next) => {
-    if (req.user.isCartEmpty) {
-      return res.redirect('/cart');
+    // if (req.user.isCartEmpty) {
+    //   return res.redirect('/cart');
+    // }
+    let message = req.flash("error");
+    //so the error message box will not always be active
+    if (message.length > 0) {
+      message = message[0];
+    } else {
+      message = null;
     }
     const user = await req.user.populate("cart.items.productId");
     const products = user.cart.items.map((i) => {
       return { quantity: i.quantity, product: { ...i.productId._doc } };
     });
-    const products1 = user.cart.items.map( async (i) => {
+    const products1 = user.cart.items.map(async (i) => {
       const qtyOrdered = i.quantity;
       const prodOrdered = i.productId._id;
       const prod = await Product.findById(prodOrdered);
@@ -147,17 +185,21 @@ module.exports = {
       if (prod.inStock <= 0) {
         const productState = prod.isDisabled;
         prod.isDisabled = !productState;
-      } 
+      }
+      if (prod.inStock < qtyOrdered) {
+        console.log("e Plenty!!!");
+      }
       await prod.save();
       console.log("prod.inStock: ", prod.inStock);
     });
-    console.log('Quantity of goods: ', quantity);
+    console.log("Quantity of goods: ", quantity);
     const newOrder = new Order({
       user: {
         name: req.user.username,
         email: req.user.email,
       },
       userId: req.user._id,
+      // cashier: req.user._id,
       products: products,
     });
 
@@ -215,9 +257,9 @@ module.exports = {
   },
 
   postCheckoutController: async (req, res, next) => {
-    const paymentOption = req.body.category;
+    const payment = req.body.category;
     let found = await Order.findOne({ _id: req.params.id });
-    found.paymentStatus = paymentOption;
+    found.paymentOption = payment;
     await found.save();
     res.redirect("/orders");
   },

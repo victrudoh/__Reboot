@@ -1,14 +1,16 @@
+
 body {
-  background-color: azure;
+  background-color: white;
   padding: 0;
-  margin: 0;
+  margin-top: 109px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  color: #522852;
+  color: #212529;
 }
 
 main {
   padding: 2%;
+  margin-top: 70px;
 }
 
 .centered {
@@ -17,8 +19,8 @@ main {
 
 /**** HEADER (Nav) ****/
 .main-header {
-  height: 50px;
-  background-color: #522852;
+  height: 70px;
+  background-color: #212529;
   top: 0;
   left: 0;
   padding: 0 3%;
@@ -48,13 +50,13 @@ main {
 
 .main-header_item a {
   text-decoration: none;
-  color: azure;
+  color: white;
 }
 
 .main-header_item a:hover,
 .main-header_item a:active,
 .main-header_item a.active {
-  color: salmon;
+  color: #ffc107;
 }
 
 
@@ -71,14 +73,14 @@ main {
 
 .main-header_item-list_right a {
   text-decoration: none;
-  color: azure;
+  color: white;
   margin-right: 20px;
 }
 
 .main-header_item-list_right a:hover,
 .main-header_item-list_right a:active,
 .main-header_item-list_right a.active {
-  color: salmon;
+  color: #ffc107;
 }
 
 
@@ -106,7 +108,7 @@ main {
 
 .form-control input
 .form-control textarea {
-  border: 1px solid #522852;
+  border: 1px solid #212529;
   border-radius: 8px;
   height: 25px;
   font: inherit;
@@ -114,23 +116,30 @@ main {
 
 .form-control input:focus
 .form-control textarea:focus {
-  outline: #522852;
+  outline: #212529;
   border-radius: inherit;
 }
 
 button {
   font: inherit;
-  border: 1px solid #522852;
-  background: #522852;
+  border: 1px solid #212529;
+  background: #212529;
   color: whitesmoke;
   border-radius: 8px;
   margin-bottom: 5px;
-  /* margin-top: 5px; */
   cursor: pointer;
   padding: 3px 5px;
 }
 
 button:hover,
 button:active {
-  background-color: #803b80;
+  background-color: #ffc107;
+}
+
+#footer {
+    background: #212529;
+    color: white;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
 }
