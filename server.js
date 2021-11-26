@@ -23,7 +23,6 @@ const storeSession = new MongoDBStoreSession({
 // const csrfProtection = csrf();
 
 
-
 app.use(flash());
 
 app.use(express.urlencoded({ extended: true }));
