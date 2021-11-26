@@ -81,7 +81,6 @@
           <% } else { %>
           <li class="main-header_item_right">
             <form action="/logout" method="POST">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <button type="submit">Log Out</button>
             </form>
           </li>

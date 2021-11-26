@@ -13,4 +13,14 @@ router.get("/viewOrder/:id", authorize("cashier"), cashierController.getViewOrde
 
 router.post("/viewOrder", authorize("cashier"), cashierController.togglePaidController);
 
+router.get("/dashboard", authorize("cashier"), cashierController.getDashboardController);
+
+router.get("/pendingOrders", authorize("cashier"), cashierController.getPendingOrdersController);
+
+router.post("/pendingOrders", authorize("cashier"), cashierController.postSearchOrdersController);
+
+router.get("/confirmedOrders", authorize("cashier"), cashierController.getConfirmedOrdersController);
+
+router.get("/findOrders", authorize("cashier"), cashierController.getFindOrderController);
+
 module.exports = router;

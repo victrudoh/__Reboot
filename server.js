@@ -5,23 +5,29 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStoreSession = require("connect-mongodb-session")(session);
-const csrf = require('csurf');
+// const csrf = require('csurf');
 const flash = require("connect-flash"); //used to send alerts back to the user
+
+
 
 const port = process.env.PORT || 3033;
 
-const MONGODB_URI = "mongodb://localhost:27017/shop";
+// const MONGODB_URI = "mongodb://localhost:27017/shop";
+const MONGODB_URI = "mongodb+srv://Edikan:pvsantakid@cluster0.7hyxu.mongodb.net/shop";
 
 const app = express();
 const storeSession = new MongoDBStoreSession({
   uri: MONGODB_URI,
   collection: "sessions",
 });
-const csrfProtection = csrf();
+// const csrfProtection = csrf();
+
+
+
 app.use(flash());
 
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.json())
 app.use(morgan("dev"));
 
 app.set("view engine", "ejs"); // template engine
@@ -35,7 +41,7 @@ app.use(
     store: storeSession,
   })
 );
-app.use(csrfProtection);
+// app.use(csrfProtection);
 
 app.use((req, res, next) => {
   if (!req.session.user) {
@@ -53,7 +59,7 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
+  // res.locals.csrfToken = req.csrfToken();
   next();
 })
 

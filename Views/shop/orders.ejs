@@ -10,7 +10,6 @@
           <option value="full">Payment option: full payment</option>
           <!-- <option value="date">Date</option> -->
         </select>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
       <button type="submit" class="btn btn-outline-secondary my-1">Sort</button>
     </form>
   </div>
@@ -38,7 +37,8 @@
         Payment Option: <%= order.paymentOption %>
         <div class="spaceBetween">
           <h3>Total Price: ₦<%= totalPrice %></h3>
-          <a href="/invoice/<%= order._id %>" class="btn btn-outline-secondary">Generate invoice</a>
+          <!-- <a href="/invoice/<%= order._id %>" class="btn btn-outline-secondary">Generate invoice</a> -->
+          <a href="/receipt/<%= order._id %>" class="btn btn-outline-secondary">Generate receipt</a>
         </div>
         <% totalPrice = 0 %>
       </ul>

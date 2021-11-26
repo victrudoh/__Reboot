@@ -85,7 +85,6 @@ module.exports = {
           prods: products,
           pageTitle: "Shop",
           path: "index",
-          csrfToken: req.csrfToken(),
           role: req.user?.role,
         });
       })
@@ -100,7 +99,6 @@ module.exports = {
           prods: products,
           pageTitle: "Shop",
           path: "index",
-          csrfToken: req.csrfToken(),
           role: req.user?.role,
         });
       })
@@ -239,6 +237,17 @@ module.exports = {
         });
       })
       .catch((err) => console.log(err, "getInvoiceController"));
+  },
+
+  getReceiptController: async (req, res) => {
+    const orders = await Order.findOne({ _id: req.params.id })
+      res.render("shop/receipt", {
+        path: "invoice",
+        pageTitle: "Invoice",
+        order: orders,
+        role: req.user.role,
+        user: req.user,
+      });
   },
 
   getcheckoutController: async (req, res) => {

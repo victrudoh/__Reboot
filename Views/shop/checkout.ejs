@@ -75,7 +75,6 @@
           <% } else { %>
           <li class="main-header_item_right">
             <form action="/logout" method="POST">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <button type="submit">Log Out</button>
             </form>
           </li>
@@ -176,7 +175,6 @@
                     </div>
 
                     <div class="print">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit" style="border: 1px solid #212529;" class="btn btn-outline-secondary my-5">Checkout</button>
                     </div>
                     

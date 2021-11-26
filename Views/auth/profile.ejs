@@ -7,7 +7,6 @@
     <form action="/profile" method="post">
         <input type="hidden" name="userId" value="<%= user._id %>">
         <button type="submit" style="border: 1px solid #ffc107; margin-right: 100px; border-radius: 10px; padding: 10px;" class="btn btn-outline warning float-end ">Edit profile</button>
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
     </form>
     
         <h2>Hello, <%= user.username %></h2>

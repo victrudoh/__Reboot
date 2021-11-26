@@ -27,6 +27,8 @@ router.post('/create_order', isAuthenticated,  authorize('user'), shopController
 
 router.get("/invoice/:id", isAuthenticated,  authorize('user'), shopController.getInvoiceController);
 
+router.get("/receipt/:id", isAuthenticated,  authorize('user'), shopController.getReceiptController);
+
 router.get("/checkout/:id",  authorize('user'), shopController.getcheckoutController);
 
 router.post("/checkout/:id", authorize('user'), shopController.postCheckoutController);

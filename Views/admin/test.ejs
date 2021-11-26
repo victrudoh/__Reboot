@@ -1,126 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/product.css" />
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
-    <title><%= pageTitle %></title>
-  </head>
-  <body>
-    <header class="main-header">
-      <nav class="main-header_nav">
-        <ul class="main-header_item-list">
-          <li class="main-header_item">
-            <a class="<%= path === 'index' ? 'active' : '' %>" href="/">Home</a>
-          </li>
-          <li class="main-header_item">
-            <a
-              class="<%= path === 'product_list' ? 'active' : '' %>"
-              href="/products"
-              >Products</a
-            >
-          </li>
-          <% if (isAuthenticated) { %>
-            <li class="main-header_item">
-              <a class="<%= path === 'cart' ? 'active' : '' %>" href="/cart"
-                >Cart</a
-              >
-            </li>
-            <li class="main-header_item">
-              <a class="<%= path === 'orders' ? 'active' : '' %>" href="/orders"
-                >Orders</a
-              >
-            </li>
-            <% if (role === 'admin') { %>
-            <li class="main-header_item">
-              <a
-                class="<%= path === 'add_product' ? 'active' : '' %>"
-                href="/admin/add_product"
-                >Add Product</a
-              >
-            </li>
-            <li class="main-header_item">
-              <a
-                class="<%= path === 'adminProduct_list' ? 'active' : '' %>"
-                href="/admin/products"
-                >Admin Products</a
-              >
-            </li>
-            <!-- <li class="main-header_item">
-              <a
-                class="<%= path === 'dashboard' ? 'active' : '' %>"
-                href="/admin/dashboard"
-                >Dashboard</a
-              >
-            </li> -->
-            <li class="main-header_item">
-              <a
-                class="<%= path === 'allOrders' ? 'active' : '' %>"
-                href="/admin/orders"
-                >All orders</a
-              >
-            </li>
-            <% } %>
-          <% } %>
-        </ul>
-        <ul class="main-header_item-list_right">
-          <% if (!isAuthenticated) { %>
-            <li class="main-header_item_right">
-              <a class="<%= path === 'login' ? 'active' : '' %>" href="/login"
-                >Login</a
-              >
-            </li>
-            <li class="main-header_item_right">
-              <a class="<%= path === 'signup' ? 'active' : '' %>" href="/signup"
-                >Signup</a
-              >
-            </li>
-          <% } else { %>
-            <li class="main-header_item_right">
-              <form action="/logout" method="POST">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit">Log Out</button>
-              </form>
-            </li>
-          <% } %>
-        </ul>
-      </nav>
-    </header>
+<%- include('../partials/header.ejs') %>
 
-    <div class="container">
+  <main style="height: 78vh;">
 
-        <main>
-            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 mt-3 mb-3 text-center">
+    <h1>Test Image Upload</h1>
 
-              <% for (let post of prods ) { %>
-                <div class="col">
-                  <input type="hidden" name="id" value="<%= post.id %>">
-                    <div class="card mb-4 mt-5 rounded-3 shadow-lg" style="min-height: 300px; max-height: 500px;">
-                      <div class="card-header h-23 py-3">
-                        <% if (post.media){%>
-                          <div class="perspective">
-                            <h4 class="onFocus my-0"><img src="<%= post.media %>" class="img-fluid" alt="No media"></h4>
-                          </div>
-                        <% } %>
-                      </div>
-                      <div class="showOnHover card-body">
-                        <h1 class="card-title pricing-card-title"><%= post.caption %></h1>
-                        <!-- <h3><small class="text-muted fw-normal"><%= post.description %></small></h3> <br> -->
-                        <h4><small class="text-primary fw-lighter">~<%= post.author == '' ? 'Anonymous' : post.author %>~</small></h4><br>
-                        <a href="/gallery/viewPost/<%= post.id %>">View post</a>
-                      </div>
-                    </div>
-                </div>
-              <% } %>
+    <img src="/images/<%= path %>" alt="<%= path %>" class="bd-placeholder-img card-img-top p-4" width="100%" height="350" >
 
+    <a href="/admin/products" class="btn btn-outline-secondary">Back</a>
 
-            </div>
-        </main>
-        
-
-    </div>
+  </main>
 
 <%- include('../partials/footer.ejs') %>

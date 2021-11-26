@@ -3,6 +3,9 @@ const path = require("path");
 const adminController = require("../Controller/admin.controller");
 const isAuthenticated = require("../Middlewares/isAuthenticated");
 const {authorize} = require("../Middlewares/roleCheck");
+const upload = require("../Middlewares/multer");
+const uploadExcel = require("../Middlewares/uploadExcel");
+
 
 const router = express.Router();
 
@@ -10,7 +13,7 @@ const router = express.Router();
 
 router.get("/add_product", isAuthenticated, authorize('admin'), adminController.getAddProductController);
 
-router.post("/add_product", isAuthenticated, authorize('admin'), adminController.postAddProductController);
+router.post("/add_product", upload.single('media'), isAuthenticated, authorize('admin'), adminController.postAddProductController);
 
 router.get("/products", authorize('admin'), adminController.getProductController);
 
@@ -18,7 +21,7 @@ router.post("/productsSort", authorize('admin'), adminController.postSortProduct
 
 router.get("/edit_product/:productId", isAuthenticated, authorize('admin'), adminController.getEditProductController);
 
-router.post("/edit_product", isAuthenticated, authorize('admin'), adminController.postEditProductController);
+router.post("/edit_product", upload.single('media'), isAuthenticated, authorize('admin'), adminController.postEditProductController);
 
 router.post("/delete_product", isAuthenticated, authorize('admin'), adminController.postDeleteProductController);
 
@@ -40,5 +43,10 @@ router.get("/edit_user/:id", authorize("admin"), adminController.postEditUserCon
 router.post("/update_user", authorize("admin"), adminController.postUpdateUserController);
 
 router.get("/out_of_stock", authorize("admin"), adminController.getDisabledProductsController);
+
+router.post("/upload", upload.single('uploadFile'), authorize("admin"), adminController.postUploadController);
+
+router.post("/uploadExcel", uploadExcel.single('uploadExcel'), authorize("admin"), adminController.postUploadExcelController);
+
 
 module.exports = router;

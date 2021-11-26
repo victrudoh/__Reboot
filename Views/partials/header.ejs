@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/cashierOrder.css" />
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/profile.css" />
+    <link rel="stylesheet" href="/css/receipt.css" />
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <title><%= pageTitle %></title>
   </head>
@@ -45,11 +46,18 @@
             >
           </li>
           <% } %> <% if (role === 'cashier') { %>
-          <li class="main-header_item">
+          <!-- <li class="main-header_item">
             <a
               class="<%= path === 'orders' ? 'active' : '' %>"
               href="/cashier/orders"
               >Cashier Orders</a
+            >
+          </li> -->
+          <li class="main-header_item">
+            <a
+              class="<%= path === 'dashboard' ? 'active' : '' %>"
+              href="/cashier/dashboard"
+              >Dashboard</a
             >
           </li>
           <% } %> <% if (role === 'admin') { %>
@@ -84,7 +92,6 @@
             <% } %>
           <li class="main-header_item_right">
             <form action="/logout" method="POST">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <button type="submit" class="btn btn-outline-warning my-1" >Log Out</button>
             </form>
           </li>

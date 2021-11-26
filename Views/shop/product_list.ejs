@@ -13,7 +13,6 @@
           <option value="lifestyle">Lifestyle</option>
           <option value="toiletries">Toiletries</option>
         </select>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <button type="submit" class="btn btn-outline-secondary my-1">Sort</button>
       </form>
     </div>
@@ -28,11 +27,13 @@
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <% for (let product of prods ) { %>
+          <% let filename %>
+          <% product.media ? filename = `/images/${product.media.filename}` : filename = product.mediaURL %>
         <div class="col">
           <form action="/cart" method="POST">
           <div class="card shadow-sm" style="min-height: 500px; max-height: 600px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);">
 
-            <img src="<%= product.media %>" alt="No Media" class="bd-placeholder-img card-img-top p-4" width="100%" height="350" >
+            <img src="<%= filename %>" alt="No Media" class="bd-placeholder-img card-img-top p-4" width="100%" height="350" >
 
             <div class="card-body">
               <h2><%= product.title %></h2>
@@ -43,7 +44,6 @@
                 <div class="btn-group">
                   <a href="/products/<%= product.id %>" class="btn btn-outline-secondary">Details</a>
                   <% if (isAuthenticated) { %>
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <button type="submit" class="btn btn-outline-warning mx-2">Add to cart</button>
                     <input type="hidden" name="productId" value="<%= product.id %>" />
                 </form>

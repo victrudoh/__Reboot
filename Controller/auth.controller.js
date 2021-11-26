@@ -46,7 +46,7 @@ module.exports = {
                   res.redirect("/admin/dashboard");
                 } else if (user.role === "cashier") {
                   console.log("this user is: ", user.role);
-                  res.redirect("/cashier/orders");
+                  res.redirect("/cashier/dashboard");
                 }
               });
             }

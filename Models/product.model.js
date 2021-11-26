@@ -12,8 +12,10 @@ const productSchema = new Schema({
     required: true
   },
   media: {
+    type: Object,
+  },
+  mediaURL: {
     type: String,
-    required: true
   },
   category: {
     type: String,

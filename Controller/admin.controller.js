@@ -2,8 +2,8 @@ const Product = require("../Models/product.model");
 const Order = require("../Models/order.model");
 const User = require("../Models/user.model");
 const escapeStringRegexp = require("escape-string-regexp");
-
-
+const xlsx = require("xlsx");
+// const datauri = require("datauri");
 
 module.exports = {
   // loginController: async (req, res) => {
@@ -23,13 +23,15 @@ module.exports = {
     });
   },
 
-  postAddProductController: (req, res, next) => {
+  postAddProductController: async (req, res, next) => {
+    console.log("req.body: ", req.body);
     const title = req.body.title;
-    const media = req.body.media;
+    const media = req.file;
     const price = req.body.price;
     const category = req.body.category;
     const inStock = req.body.inStock;
     const description = req.body.description;
+
     const product = new Product({
       title: title,
       media: media,
@@ -76,9 +78,22 @@ module.exports = {
   },
 
   postEditProductController: async (req, res, next) => {
+    let message = req.flash("error");
+    //so the error message box will not always be active
+    if (message.length > 0) {
+      message = message[0];
+    } else {
+      message = null;
+    }
+
+    console.log(req.body);
+    if(!req.file) {
+      req.flash("error", "Sorry, image is required");
+      return res.redirect("/admin/products");
+    }
     const prodId = req.body.productId;
     const updatedTitle = req.body.title;
-    const updatedMedia = req.body.media;
+    const updatedMedia = req.file;
     const updatedPrice = req.body.price;
     const updatedCategory = req.body.category;
     const updatedInStock = req.body.inStock;
@@ -271,7 +286,7 @@ module.exports = {
     const updatedRole = req.body.role;
 
     const user = await User.findById(userId);
-    
+
     user.username = updatedUsername;
     user.email = updatedEmail;
     user.password = updatedPassword;
@@ -285,7 +300,7 @@ module.exports = {
   getDisabledProductsController: async (req, res, next) => {
     const prods = await Product.find({ isDisabled: true });
     const disabledMode = req.query.disable;
-    console.log("getDisabledProductsController: ~ disabledMode", disabledMode)
+    console.log("getDisabledProductsController: ~ disabledMode", disabledMode);
 
     res.render("admin/adminProduct_list", {
       pageTitle: "Disabled Products",
@@ -294,5 +309,96 @@ module.exports = {
       disable: disabledMode,
       prods,
     });
+  },
+
+  postUploadController: async (req, res, next) => {
+    console.log(req.file);
+    console.log(req.file.filename);
+
+    let path;
+
+    if (req.file.mimetype === "image/jpeg") {
+      path = req.file.filename;
+    } else {
+      path = null;
+    }
+
+    res.render("admin/test", {
+      pageTitle: "",
+      path: "dashboard",
+      role: req.user.role,
+      path,
+    });
+  },
+
+  postUploadExcelController: async (req, res, next) => {
+    try {const active = req.session.user._id;
+    const admin = await User.findOne({ role: "admin", _id: active });
+
+    console.log('req.file: ', req.file);
+
+    if (
+      req.file.mimetype ===
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+      req.file.mimetype === "application/vnd.ms-excel"
+    ) {
+      console.log("Excel file...");
+      let filePath = req.file.filename;
+      let readExcelFile = xlsx.readFile(filePath);
+      let sheetName = readExcelFile.SheetNames[0];
+      let sheetValue = readExcelFile.Sheets[sheetName];
+      let convertToJSON = xlsx.utils.sheet_to_json(sheetValue);
+      console.log("convertToJSON", convertToJSON);
+      convertToJSON.map(async (update) => {
+        const updatedTitle = update.title;
+        const updatedMedia = update.media;
+        const updatedPrice = update.price;
+        const updatedCategory = update.category;
+        const updatedInStock = update.inStock;
+        const updatedDescription = update.description;
+
+        const product = await Product.findOne({
+          title: updatedTitle,
+          category: updatedCategory,
+        }).exec();
+        console.log(
+          "🚀 ~ file: admin.controller.js ~ line 347 ~ convertToJSON.map ~ product",
+          product
+        );
+        if (!product) {
+          const newProd = await new Product({
+            title: updatedTitle,
+            media: null,
+            mediaURL: updatedMedia,
+            price: updatedPrice,
+            category: updatedCategory,
+            inStock: updatedInStock,
+            description: updatedDescription,
+            userId: admin,
+          });
+          await newProd.save();
+          console.log("saved new product: ", newProd.title);
+        } else {
+          product.title = updatedTitle;
+          product.mediaURL = updatedMedia;
+          product.media = null;
+          product.price = updatedPrice;
+          product.category = updatedCategory;
+          product.inStock += updatedInStock;
+          product.description = updatedDescription;
+
+          await product.save();
+        }
+
+        console.log("Updated Product");
+        return res.redirect("/admin/products");
+      });
+    } else {
+      console.log("Not excel file...");
+      res.redirect("/admin/products");
+    }} catch (e) {
+      console.log(e.message);
+      res.redirect("/admin/products");
+    }
   },
 };
