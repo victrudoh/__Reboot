@@ -65,7 +65,7 @@ app.use((req, res, next) => {
 const errorController = require("./Controller/error.controller");
 const User = require("./Models/user.model");
 
-const adminRouter = require("./routes/admin.routes");
+const adminRouter = require("./Routes/admin.routes");
 const shopRouter = require("./Routes/shop.routes");
 const authRouter = require("./Routes/auth.routes");
 const cashierRouter = require("./Routes/cashier.routes");
