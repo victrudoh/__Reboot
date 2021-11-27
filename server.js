@@ -28,8 +28,8 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.set("view engine", "ejs"); // template engine
-app.set("Views", path.join(__dirname, "Views")); // setting views directory
-app.use(express.static(path.join(__dirname, "public"))); // static files directory
+app.set("Views", path.join(__dirname, "/Views")); // setting views directory
+app.use(express.static(path.join(__dirname, "/public"))); // static files directory
 app.use(
   session({
     secret: "this is the secret of edikan",
