@@ -81,7 +81,7 @@ module.exports = {
   getIndexController: async (req, res, next) => {
     Product.find()
       .then((products) => {
-        res.render("/shop/index", {
+        res.render("shop/index", {
           prods: products,
           pageTitle: "Shop",
           path: "index",
