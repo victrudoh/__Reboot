@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.set("view engine", "ejs"); // template engine
-app.set("Views", path.join(__dirname, "/Views")); // setting views directory
+app.set("views", path.join(__dirname, "/views")); // setting views directory
 app.use(express.static(path.join(__dirname, "/Public"))); // static files directory
 app.use(
   session({
